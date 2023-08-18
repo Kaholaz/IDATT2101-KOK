@@ -1,4 +1,4 @@
-package java_solutions;
+package stockpicker.java_solution;
 
 import java.util.Random;
 

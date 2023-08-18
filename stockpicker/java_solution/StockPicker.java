@@ -1,4 +1,4 @@
-package java_solutions;
+package stockpicker.java_solution;
 
 public class StockPicker {
 
