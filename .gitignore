@@ -97,6 +97,10 @@ go.work
 hs_err_pid*
 replay_pid*
 
+# Haskell
+stock
+*.hi
+
 # Ignore soydev editor
 .vscode/*
 .vscode/**/*
