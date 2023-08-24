@@ -1,5 +1,5 @@
-import System.Random
-import Data.Time
+import System.Random ( mkStdGen, Random(randomRs) )
+import Data.Time ( diffUTCTime, getCurrentTime )
 import Text.Printf ( printf )
 
 genRandomList :: Int -> Int -> Int -> [Int]
