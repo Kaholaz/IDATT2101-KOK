@@ -7,21 +7,25 @@ genRandomList count minValue maxValue =
     take count $ randomRs (minValue, maxValue) (mkStdGen 42)
 
 maxProfitWithDays :: [Int] -> (Int, Int, Int, Int)
-maxProfitWithDays arr = fst $ foldl processDay ((0 :: Int, 0 :: Int, 0 :: Int, 0 :: Int), (head arr, 1 :: Int)) $ zip [1..] $ tail $ scanl (+) 0 arr
+maxProfitWithDays arr = fst $ foldl processDay ((0 :: Int, 0 :: Int, 0 :: Int, 0 :: Int), (head arr, 1 :: Int, head arr, 1 :: Int)) arr
     where
-        processDay ((buyPrice, sellPrice, buyDay, sellDay), (minTemp, indexMinTemp)) (day, price)
+        processDay ((buyPrice, sellPrice, buyDay, sellDay), (minTemp, indexMinTemp, curr, day)) change
           | price - minTemp > sellPrice - buyPrice =
             let newBuyPrice = minTemp
                 newSellPrice = price
                 newBuyDay = indexMinTemp
                 newSellDay = day
-            in ((newBuyPrice, newSellPrice, newBuyDay, newSellDay), (minTemp, indexMinTemp))
+            in ((newBuyPrice, newSellPrice, newBuyDay, newSellDay), (minTemp, indexMinTemp, price, newDay))
           | price < minTemp =
             let newMinTemp = price
                 newIndexMinTemp = day
-            in ((buyPrice, sellPrice, buyDay, sellDay), (newMinTemp, newIndexMinTemp))
+            in ((buyPrice, sellPrice, buyDay, sellDay), (newMinTemp, newIndexMinTemp, price, newDay))
           | otherwise =
-            ((buyPrice, sellPrice, buyDay, sellDay), (minTemp, indexMinTemp))
+            ((buyPrice, sellPrice, buyDay, sellDay), (minTemp, indexMinTemp, price, newDay))
+          where
+            newDay = day + 1
+            price = curr + change
+
 
 main :: IO ()
 main = do
